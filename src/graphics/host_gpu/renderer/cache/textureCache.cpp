@@ -899,7 +899,8 @@ ImageId TextureCache::ResolveDepthOverlap(const ImageInfo& requested, BindingTyp
 	    requested.extent == cached.info.extent && requested.resources == cached.info.resources &&
 	    requested.type == cached.info.type && requested.pitch == cached.info.pitch &&
 	    !requested.HasStencil() && !cached.info.HasStencil() && !requested.HasMetadata() &&
-	    !cached.info.HasMetadata();
+	           (cached.info.metadata.kind == ImageMetadataKind::None ||
+        cached.info.metadata.kind == ImageMetadataKind::Htile);
 	// PPSA04264
 	const bool retain_cached_layout =
 	    requested.samples == 1 && cached.info.samples == 1 && cached.backing.samples == 1 &&
